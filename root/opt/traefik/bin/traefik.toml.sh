@@ -194,13 +194,12 @@ if [ "${TRAEFIK_HTTPS_ENABLE}" == "true" ] || [ "${TRAEFIK_HTTPS_ENABLE}" == "on
   filelist=`ls -1 ${TRAEFIK_SSL_PATH}/*.key | rev | cut -d"." -f2- | rev`
   RC=`echo $?`
 
-  #if [ $RC -eq 0 ] && [ "${TRAEFIK_ACME_ENABLE}" == "false" ]; then
   if [ $RC -eq 0 ]; then
       for i in $filelist; do
-          if [ -f "$i.crt" ]; then
+          if [ -f "$i.pem" ]; then
               TRAEFIK_ENTRYPOINTS_HTTPS=$TRAEFIK_ENTRYPOINTS_HTTPS"
         [[entryPoints.https.tls.certificates]]
-          certFile = \"${i}.crt\"
+          certFile = \"${i}.pem\"
           keyFile = \"${i}.key\"
 "
           fi
